@@ -1,0 +1,34 @@
+version: "3.7"
+services:
+  gateway:
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile
+    volumes:
+      - ./gateway:/home/node/gateway
+    networks:
+      new:
+        aliases:
+          - api_gateway
+    environment:
+      - MICROSERVICE_URL=http://microservice
+    ports:
+      - 3000:3000
+    depends_on:
+      - microservice
+
+  microservice:
+    build:
+      context: ./microservice
+      dockerfile: Dockerfile
+    volumes:
+      - ./microservice:/home/node/microservice
+    ports:
+      - 3009:3009
+    networks:
+      new:
+        aliases:
+          - microservice
+
+networks:
+  new:
