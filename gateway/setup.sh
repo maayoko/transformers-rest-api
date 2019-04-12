@@ -14,4 +14,4 @@ if [ ! -d "$NODE_DIRECTORY" ]; then
 fi
 
 echo "Starting the gateway application in development mode..."
-yarn start
+yarn start:dev

@@ -1,10 +1,19 @@
-[{ "path"   : [ "/api/**" ],
-  "target" : "https://reqres.in" },
-  { "path"       : [ "/v1/**" ],
-    "target"     : "http://localhost:2000",
+[
+  { "path": ["/api/**"], "target": "https://reqres.in" },
+  {
+    "path": ["/v1/**"],
+    "target": "http://localhost:2000",
     "headers": {
       "X-Test": "Added Header"
-    }},
-  { "path"     : ["/albums", "/posts"],
-    "target"   : "https://jsonplaceholder.typicode.com",
-    "logLevel" : "error" } ]
+    }
+  },
+  {
+    "path": ["/albums", "/posts"],
+    "target": "https://jsonplaceholder.typicode.com",
+    "logLevel": "error"
+  },
+  {
+    "path": ["/profile-autocomplete"],
+    "target": "http://microservice"
+  }
+]
