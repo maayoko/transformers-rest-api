@@ -4,8 +4,8 @@ import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  await app.listen(3000);
-  app.disable("x-powered-by");
+	const app = await NestFactory.create(AppModule);
+	await app.listen(3000);
+	app.disable("x-powered-by");
 }
 bootstrap();

@@ -1,8 +1,8 @@
 import { Module } from "@nestjs/common";
-import { GatewayModule } from "./gateway/gateway.module";
+import { AutocompleteModule } from "./autocomplete/autocomplete.module";
 
 @Module({
-	imports: [GatewayModule],
+	imports: [AutocompleteModule],
 	controllers: [],
 	providers: [],
 })

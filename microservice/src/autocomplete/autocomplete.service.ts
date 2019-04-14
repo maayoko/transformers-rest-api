@@ -5,9 +5,6 @@ import { Client, Transport, ClientProxy } from "@nestjs/microservices";
 
 @Injectable()
 export class ProfileAutocompleteService {
-	@Client({ transport: Transport.TCP })
-	private readonly client: ClientProxy;
-
 	constructor(private readonly http: HttpService) {}
 
 	getProfiles(): Observable<AxiosResponse<[]>> {
@@ -19,6 +16,15 @@ export class ProfileAutocompleteService {
 					{ name: "Jane Doe", id: "fkjfirefrwfkwn" },
 					{ name: "Marry Doe", id: "nfewjnfkw" }
 				]);
+				observer.complete();
+			}, 3000);
+		});
+	}
+
+	getProfile(): Observable<AxiosResponse<{}>> {
+		return Observable.create((observer: Observer<{}>) => {
+			setTimeout(() => {
+				observer.next({ name: "John Doe", id: "fjwfienfinkf" });
 				observer.complete();
 			}, 3000);
 		});

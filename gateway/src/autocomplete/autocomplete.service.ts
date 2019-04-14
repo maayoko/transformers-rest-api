@@ -1,13 +1,16 @@
-import { Injectable } from "@nestjs/common";
-import { Client, Transport, ClientProxy } from "@nestjs/microservices";
+import { Injectable, Inject, Body } from "@nestjs/common";
+import { ClientProxy } from "@nestjs/microservices";
 import { Observable } from "rxjs";
+import { AUTOCOMPLETE_SERVICE } from "./autocomplete.constants";
+import { RequestParamsDto } from "./dto/request.params";
 
 @Injectable()
 export class AutocompleteService {
-	@Client({ transport: Transport.TCP, options: { port: 3009 } })
-	private readonly client: ClientProxy;
+	constructor(
+		@Inject(AUTOCOMPLETE_SERVICE) private readonly client: ClientProxy,
+	) {}
 
-	getProfiles(): Observable<any> {
-		return this.client.send({ cmd: "getProfiles" }, "");
+	getProfiles(params: RequestParamsDto): Observable<any> {
+		return this.client.send({ cmd: "getProfiles" }, JSON.stringify(params));
 	}
 }
