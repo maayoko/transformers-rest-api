@@ -1,4 +1,5 @@
 import { NestFactory } from "@nestjs/core";
+import { ValidationPipe } from "@nestjs/common";
 import { Transport } from "@nestjs/microservices";
 import { ApplicationModule } from "./app.module";
 
@@ -15,6 +16,7 @@ async function bootstrap() {
    *
    */
   const app = await NestFactory.create(ApplicationModule);
+  app.useGlobalPipes(new ValidationPipe());
   app.connectMicroservice({
     transport: Transport.TCP,
     options: { retryAttempts: 5, retryDelay: 3000 }

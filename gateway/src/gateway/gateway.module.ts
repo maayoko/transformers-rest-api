@@ -1,6 +1,6 @@
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import * as httpProxy from 'http-proxy-middleware';
-import { GatewayService } from './gateway.service';
+import { MiddlewareConsumer, Module, NestModule } from "@nestjs/common";
+import * as httpProxy from "http-proxy-middleware";
+import { GatewayService } from "./gateway.service";
 
 @Module({
   imports: [],
@@ -17,13 +17,15 @@ export class GatewayModule implements NestModule {
    */
   configure(consumer: MiddlewareConsumer) {
     this.gatewayService.getJsonRoutes().map(routeOptions => {
-      const proxyPath = routeOptions.path;
+      const proxyPath = routeOptions.path as string[];
       delete routeOptions.path;
       const proxyOptions = {
         ...this.gatewayService.getDefaultOptions(),
         ...routeOptions,
       };
-      consumer.apply(httpProxy(proxyPath, proxyOptions)).forRoutes('*');
+      consumer
+        .apply(httpProxy(proxyPath, proxyOptions))
+        .forRoutes(...proxyPath);
     });
   }
 }
