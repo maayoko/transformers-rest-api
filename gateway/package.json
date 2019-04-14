@@ -23,6 +23,7 @@
     "@nestjs/common": "^5.4.0",
     "@nestjs/core": "^5.4.0",
     "@nestjs/jwt": "^0.2.1",
+    "@nestjs/microservices": "^6.1.0",
     "@nestjs/passport": "^5.1.0",
     "@nestjs/typeorm": "^5.2.2",
     "@types/http-proxy-middleware": "^0.19.0",
