@@ -1,6 +1,7 @@
-import { Controller, Post, Body } from "@nestjs/common";
+import { Controller, Post, Body, Get, Param } from "@nestjs/common";
 import { AutocompleteService } from "./autocomplete.service";
 import { RequestParamsDto } from "./dto/request.params";
+import { GetProfileDto } from "./dto/get-profile-dto";
 
 @Controller("profile-autocomplete")
 export class AutocompleteController {
@@ -8,7 +9,11 @@ export class AutocompleteController {
 
 	@Post()
 	getProfiles(@Body() params: RequestParamsDto) {
-		console.log(params);
 		return this.autocompleteService.getProfiles(params);
+	}
+
+	@Get(":id")
+	getProfile(@Param() userId: GetProfileDto) {
+		return this.autocompleteService.getProfile(userId);
 	}
 }

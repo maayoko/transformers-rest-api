@@ -16,4 +16,9 @@ export class ProfileAutocompleteController {
 		console.log(params);
 		return this.profileAutocompleteService.getProfiles();
 	}
+
+	@MessagePattern({ cmd: "getProfile" })
+	getProfile(): Observable<AxiosResponse<{}>> {
+		return this.profileAutocompleteService.getProfile();
+	}
 }
