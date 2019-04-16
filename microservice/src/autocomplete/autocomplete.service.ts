@@ -25,25 +25,15 @@ export class ProfileAutocompleteService {
 					})
 				);
 		} catch (e) {
-			console.log("error");
 			return Observable.create((observer: Observer<any>) => {
 				observer.error(e);
 				observer.complete();
 			});
 		}
-		// return Observable.create((observer: Observer<any>) => {
-		// 	setTimeout(() => {
-		// 		observer.next([
-		// 			{ name: "John Doe", id: "fjwfienfinkf" },
-		// 			{ name: "Jane Doe", id: "fkjfirefrwfkwn" },
-		// 			{ name: "Marry Doe", id: "nfewjnfkw" }
-		// 		]);
-		// 		observer.complete();
-		// 	}, 3000);
-		// });
 	}
 
-	getProfile(params: GetProfileDto): Observable<AxiosResponse<{}>> {
+	getProfile(getProfileDto: GetProfileDto): Observable<AxiosResponse<{}>> {
+		console.log(getProfileDto);
 		return Observable.create((observer: Observer<{}>) => {
 			setTimeout(() => {
 				observer.next({ name: "John Doe", id: "fjwfienfinkf" });
