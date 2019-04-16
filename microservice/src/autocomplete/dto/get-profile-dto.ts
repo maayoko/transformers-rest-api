@@ -1,4 +1,5 @@
 import { IsString, IsNotEmpty, Contains } from "class-validator";
+import { StrategyType } from "../strategies/Strategy";
 
 export class GetProfileDto {
 	@IsString()
@@ -8,5 +9,5 @@ export class GetProfileDto {
 	@Contains("facebook")
 	@IsString()
 	@IsNotEmpty()
-	type: string;
+	type: StrategyType;
 }

@@ -1,14 +1,21 @@
 import { HttpService } from "@nestjs/common";
 import { Observable } from "rxjs";
+import { AxiosResponse } from "axios";
+
+export type StrategyType = "facebook" | "google" | "reddit" | "instagram";
 
 export abstract class AbstractStrategy {
-	constructor(private readonly http: HttpService) {}
+	private readonly http: HttpService;
 
-	public abstract generateUrl(): string;
+	protected abstract generateUrl(query: string): string;
 
-	// public searchProfiles(): Observable<any> {
-	//     const url = this.generateUrl();
-	// }
+	public searchProfiles(query: string): Observable<AxiosResponse> {
+		const url = this.generateUrl(query);
+		return this.http.get(url);
+	}
 
-	// public searchProfile(): Observable<any> {}
+	public searchProfile(query: string): Observable<AxiosResponse> {
+		const url = this.generateUrl(query);
+		return this.http.get(url);
+	}
 }
