@@ -1,6 +1,6 @@
 import { Controller, UseFilters } from "@nestjs/common";
 import { ProfileAutocompleteService } from "./autocomplete.service";
-import { RequestParamsDto } from "./dto/request.params";
+import { GetProfilesDto } from "./dto/get-profiles-dto";
 import { AxiosResponse } from "axios";
 import { Observable } from "rxjs";
 import { GetProfileDto } from "./dto/get-profile-dto";
@@ -15,12 +15,12 @@ export class ProfileAutocompleteController {
 	) {}
 
 	@MessagePattern({ cmd: "getProfiles" })
-	getProfiles(params: RequestParamsDto): Observable<AxiosResponse<[]>> {
-		return this.profileAutocompleteService.getProfiles(params);
+	getProfiles(getProfilesDto: GetProfilesDto): Observable<AxiosResponse<[]>> {
+		return this.profileAutocompleteService.getProfiles(getProfilesDto);
 	}
 
 	@MessagePattern({ cmd: "getProfile" })
-	getProfile(params: GetProfileDto): Observable<AxiosResponse<{}>> {
-		return this.profileAutocompleteService.getProfile(params);
+	getProfile(getProfileDto: GetProfileDto): Observable<AxiosResponse<{}>> {
+		return this.profileAutocompleteService.getProfile(getProfileDto);
 	}
 }

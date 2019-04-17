@@ -1,16 +1,16 @@
 import { IsNotEmpty, IsString, Contains, IsArray } from "class-validator";
-import { StrategyType } from "../strategies/Strategy";
+import { UrlGeneratorType } from "../strategies/interfaces/url.generator";
 
-export class RequestParamsDto {
+export class GetProfilesDto {
 	@Contains("facebook")
 	@IsString()
 	@IsNotEmpty()
-	type: StrategyType;
+	type: UrlGeneratorType;
 
 	@IsNotEmpty()
 	@IsString()
 	query: string;
 
 	@IsArray()
-	currentValue: number[];
+	currentValues: number[];
 }

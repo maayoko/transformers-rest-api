@@ -1,8 +1,7 @@
-import { Injectable, HttpService } from "@nestjs/common";
-import { Observable, Observer } from "rxjs";
-import { map } from "rxjs/operators";
+import { Injectable } from "@nestjs/common";
+import { Observable } from "rxjs";
 import { AxiosResponse } from "axios";
-import { RequestParamsDto } from "./dto/request.params";
+import { GetProfilesDto } from "./dto/get-profiles-dto";
 import { GetProfileDto } from "./dto/get-profile-dto";
 import { StrategyCollection } from "./strategies/Collection";
 
@@ -10,10 +9,8 @@ import { StrategyCollection } from "./strategies/Collection";
 export class ProfileAutocompleteService {
 	constructor(private readonly strategyCollection: StrategyCollection) {}
 
-	getProfiles(
-		requestParamsDto: RequestParamsDto
-	): Observable<AxiosResponse<[]>> {
-		const { query, type } = requestParamsDto;
+	getProfiles(getProfilesDto: GetProfilesDto): Observable<AxiosResponse<[]>> {
+		const { query, type } = getProfilesDto;
 		const strategy = this.strategyCollection.getStrategy(type);
 		return strategy.searchProfiles(query);
 	}

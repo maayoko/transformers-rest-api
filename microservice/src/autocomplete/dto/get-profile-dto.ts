@@ -1,5 +1,5 @@
 import { IsString, IsNotEmpty, Contains } from "class-validator";
-import { StrategyType } from "../strategies/Strategy";
+import { UrlGeneratorType } from "../strategies/interfaces/url.generator";
 
 export class GetProfileDto {
 	@IsString()
@@ -9,5 +9,5 @@ export class GetProfileDto {
 	@Contains("facebook")
 	@IsString()
 	@IsNotEmpty()
-	type: StrategyType;
+	type: UrlGeneratorType;
 }

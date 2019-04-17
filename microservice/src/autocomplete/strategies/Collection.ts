@@ -1,29 +1,25 @@
 import { Injectable } from "@nestjs/common";
 import { IStrategy } from "./interfaces/strategy";
-import { Strategy, StrategyType } from "./Strategy";
-import { urlFactory } from "./facebook/url.generator.factory";
-
-import * as strategies from "../../config/strategies.json";
-
-type StrategyList = { type: StrategyType; url: string }[];
+import { Strategy } from "./Strategy";
+import { IUrlGenerator, UrlGeneratorType } from "./interfaces/url.generator";
+import { FacebookUrlGenerator } from "./urlGenerators/facebook.generator";
 
 @Injectable()
 export class StrategyCollection {
-	private readonly strategies: Map<StrategyType, IStrategy> = new Map();
+	private readonly strategies: Map<UrlGeneratorType, IStrategy> = new Map();
 
-	constructor() {
-		this.createStrategies();
+	constructor(fbUrlGenerator: FacebookUrlGenerator) {
+		this.createStrategies([...arguments] as IUrlGenerator[]);
 	}
 
-	createStrategies(): void {
-		const strategyList: StrategyList = strategies as StrategyList;
-		for (let strategy of strategyList) {
-			const { type, url } = strategy;
-			this.strategies.set(type, new Strategy(type, urlFactory(type)));
+	createStrategies(urlGenerators: IUrlGenerator[]): void {
+		for (let urlGenerator of urlGenerators) {
+			const { type } = urlGenerator;
+			this.strategies.set(type, new Strategy(urlGenerator));
 		}
 	}
 
-	getStrategy(type: StrategyType): IStrategy | undefined {
+	getStrategy(type: UrlGeneratorType): IStrategy | undefined {
 		const strategy = this.strategies.get(type);
 		return strategy;
 	}
