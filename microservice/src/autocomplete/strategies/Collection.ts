@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { IStrategy } from "./interfaces/strategy";
-import { Strategy } from "./Strategy";
+import { SearchStrategy } from "./Strategy";
 import { IUrlGenerator, UrlGeneratorType } from "./interfaces/url.generator";
 import { FacebookUrlGenerator } from "./urlGenerators/facebook.generator";
 
@@ -15,7 +15,7 @@ export class StrategyCollection {
 	createStrategies(urlGenerators: IUrlGenerator[]): void {
 		for (let urlGenerator of urlGenerators) {
 			const { type } = urlGenerator;
-			this.strategies.set(type, new Strategy(urlGenerator));
+			this.strategies.set(type, new SearchStrategy(urlGenerator));
 		}
 	}
 

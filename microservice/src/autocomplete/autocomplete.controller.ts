@@ -6,6 +6,7 @@ import { Observable } from "rxjs";
 import { GetProfileDto } from "./dto/get-profile-dto";
 import { MessagePattern } from "@nestjs/microservices";
 import { ExceptionFilter } from "../common/filters/rpc-exception.filter";
+import { RetrieveProfileDto } from "./dto/retrieve-profile-dto";
 
 @UseFilters(new ExceptionFilter())
 @Controller()
@@ -15,12 +16,14 @@ export class ProfileAutocompleteController {
 	) {}
 
 	@MessagePattern({ cmd: "getProfiles" })
-	getProfiles(getProfilesDto: GetProfilesDto): Observable<AxiosResponse<[]>> {
+	getProfiles(
+		getProfilesDto: GetProfilesDto
+	): Observable<RetrieveProfileDto[]> {
 		return this.profileAutocompleteService.getProfiles(getProfilesDto);
 	}
 
 	@MessagePattern({ cmd: "getProfile" })
-	getProfile(getProfileDto: GetProfileDto): Observable<AxiosResponse<{}>> {
+	getProfile(getProfileDto: GetProfileDto): Observable<RetrieveProfileDto> {
 		return this.profileAutocompleteService.getProfile(getProfileDto);
 	}
 }
