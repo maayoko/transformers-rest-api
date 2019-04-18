@@ -15,7 +15,7 @@ export class SearchStrategy implements IStrategy {
 		return this.http.get(url).pipe(
 			pluck("data", "data"),
 			map(profiles => this.urlGenerator.transformData(profiles)),
-			catchError(err => err)
+			catchError(err => throwError(new NotFoundException()))
 		);
 	}
 
@@ -24,9 +24,7 @@ export class SearchStrategy implements IStrategy {
 		return this.http.get(url).pipe(
 			pluck("data"),
 			map(profile => this.urlGenerator.transformData(profile)),
-			catchError(err => {
-				return throwError(new NotFoundException());
-			})
+			catchError(err => throwError(new NotFoundException()))
 		);
 	}
 }

@@ -3,16 +3,16 @@ import {
 	Post,
 	Body,
 	Get,
-	UseInterceptors,
 	Query,
 	HttpCode,
+	UseFilters,
 } from "@nestjs/common";
 import { AutocompleteService } from "./autocomplete.service";
 import { RequestParamsDto } from "./dto/request.params";
 import { GetProfileDto } from "./dto/get-profile-dto";
-import { ValidationInterceptor } from "../common/interceptors/validation.interceptor";
+import { AllExceptionFilter } from "../common/filters/rpc-exception.filter";
 
-@UseInterceptors(ValidationInterceptor)
+@UseFilters(AllExceptionFilter)
 @Controller("profile-autocomplete")
 export class AutocompleteController {
 	constructor(private readonly autocompleteService: AutocompleteService) {}
@@ -26,7 +26,6 @@ export class AutocompleteController {
 	@Get()
 	@HttpCode(200)
 	getProfile(@Query() getProfileDto: GetProfileDto) {
-		console.log(getProfileDto);
 		return this.autocompleteService.getProfile(getProfileDto);
 	}
 }

@@ -3,7 +3,6 @@ import { Observable } from "rxjs";
 import { GetProfilesDto } from "./dto/get-profiles-dto";
 import { GetProfileDto } from "./dto/get-profile-dto";
 import { StrategyCollection } from "./strategies/Collection";
-import { map } from "rxjs/operators";
 import { RetrieveProfileDto } from "./dto/retrieve-profile-dto";
 
 @Injectable()
@@ -13,17 +12,9 @@ export class ProfileAutocompleteService {
 	getProfiles(
 		getProfilesDto: GetProfilesDto
 	): Observable<RetrieveProfileDto[]> {
-		const { query, type, currentValues } = getProfilesDto;
+		const { query, type } = getProfilesDto;
 		const strategy = this.strategyCollection.getStrategy(type);
-		return strategy
-			.searchProfiles(query)
-			.pipe(
-				map(profiles =>
-					profiles.filter(
-						profile => !currentValues.includes(Number(profile.id))
-					)
-				)
-			);
+		return strategy.searchProfiles(query);
 	}
 
 	getProfile(getProfileDto: GetProfileDto): Observable<RetrieveProfileDto> {

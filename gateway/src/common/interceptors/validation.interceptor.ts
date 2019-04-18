@@ -4,6 +4,7 @@ import {
 	Injectable,
 	NestInterceptor,
 	BadRequestException,
+	HttpException,
 } from "@nestjs/common";
 import { Observable, throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
@@ -14,14 +15,7 @@ export class ValidationInterceptor implements NestInterceptor {
 		return next.handle().pipe(
 			catchError(err => {
 				console.log(err);
-				return throwError(
-					new BadRequestException(
-						err.message.map(({ property, constraints }) => ({
-							[property]: Object.values(constraints),
-						})),
-						err.error,
-					),
-				);
+				return throwError(new HttpException(err, err.status));
 			}),
 		);
 	}
