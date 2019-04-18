@@ -4,10 +4,10 @@ import { GetProfilesDto } from "./dto/get-profiles-dto";
 import { Observable } from "rxjs";
 import { GetProfileDto } from "./dto/get-profile-dto";
 import { MessagePattern } from "@nestjs/microservices";
-import { KnownExceptionFilter } from "../common/filters/known-exception.filter";
-import { UnknownExceptionFilter } from "../common/filters/unknown-exception.filter";
+import { KnownExceptionFilter } from "./filters/known-exception.filter";
+import { UnknownExceptionFilter } from "./filters/unknown-exception.filter";
 import { RetrieveProfileDto } from "./dto/retrieve-profile-dto";
-import { ProfilesFilterInterceptor } from "../common/interceptors/profiles-filter.interceptor";
+import { ProfilesFilterInterceptor } from "./interceptors/profiles-filter.interceptor";
 
 @UseFilters(UnknownExceptionFilter, KnownExceptionFilter)
 @Controller()

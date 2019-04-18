@@ -1,5 +1,5 @@
 import { IsString, IsNotEmpty, Contains } from "class-validator";
-import { UrlGeneratorType } from "../strategies/interfaces/url.generator";
+import { SearchEngineType } from "../strategies/interfaces/search-engine";
 
 export class GetProfileDto {
 	@IsString()
@@ -9,5 +9,5 @@ export class GetProfileDto {
 	@Contains("facebook")
 	@IsString()
 	@IsNotEmpty()
-	type: UrlGeneratorType;
+	type: SearchEngineType;
 }

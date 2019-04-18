@@ -1,14 +1,15 @@
-import { IUrlGenerator } from "../interfaces/url.generator";
-import { FACEBOOK_CONFIG_TOKEN } from "../../../config/facebook.config";
-import { Inject, Injectable } from "@nestjs/common";
-import { IFacebookConfig } from "../../../config/interfaces/facebook-config.interface";
-import { UrlGeneratorType } from "../interfaces/url.generator";
+import { SearchEngine } from "../interfaces/search-engine";
+import { FACEBOOK_CONFIG_TOKEN } from "../../config/facebook.config";
+import { Inject, Injectable, BadRequestException } from "@nestjs/common";
+import { IFacebookConfig } from "../../config/interfaces/facebook-config.interface";
+import { SearchEngineType } from "../interfaces/search-engine";
 import { RetrieveFacebookProfileDto } from "../../dto/retrieve-facebook-profile-dto";
 import { RetrieveProfileDto } from "../../dto/retrieve-profile-dto";
+import { AxiosError } from "axios";
 
 @Injectable()
-export class FacebookUrlGenerator implements IUrlGenerator {
-	public type: UrlGeneratorType = "facebook";
+export class FacebookSearchEngine implements SearchEngine {
+	public type: SearchEngineType = "facebook";
 
 	constructor(
 		@Inject(FACEBOOK_CONFIG_TOKEN)
@@ -50,6 +51,13 @@ export class FacebookUrlGenerator implements IUrlGenerator {
 		}
 		return (fbProfiles as RetrieveFacebookProfileDto[]).map(fbProfile =>
 			this.createProfile(fbProfile)
+		);
+	}
+
+	handleResponseError(err: AxiosError) {
+		return new BadRequestException(
+			"Couldn't process your request. Please try again later.",
+			"Bad Request"
 		);
 	}
 }

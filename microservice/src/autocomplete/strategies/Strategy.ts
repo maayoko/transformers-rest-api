@@ -1,30 +1,35 @@
-import { HttpService, NotFoundException } from "@nestjs/common";
+import { HttpService, Injectable, BadRequestException } from "@nestjs/common";
 import { Observable, throwError } from "rxjs";
 import { IStrategy } from "./interfaces/strategy";
-import { IUrlGenerator } from "./interfaces/url.generator";
+import { SearchEngine } from "./interfaces/search-engine";
 import { map, catchError, pluck } from "rxjs/operators";
 import { RetrieveProfileDto } from "../dto/retrieve-profile-dto";
 
+@Injectable()
 export class SearchStrategy implements IStrategy {
 	private readonly http: HttpService = new HttpService();
 
-	constructor(private urlGenerator: IUrlGenerator) {}
+	constructor(private searchEngine: SearchEngine) {}
 
 	public searchProfiles(query: string): Observable<RetrieveProfileDto[]> {
-		const url = this.urlGenerator.generateUrlForProfiles(query);
+		const url = this.searchEngine.generateUrlForProfiles(query);
 		return this.http.get(url).pipe(
 			pluck("data", "data"),
-			map(profiles => this.urlGenerator.transformData(profiles)),
-			catchError(err => throwError(new NotFoundException()))
+			map(profiles => this.searchEngine.transformData(profiles)),
+			catchError(err =>
+				throwError(this.searchEngine.handleResponseError(err))
+			)
 		);
 	}
 
 	public searchProfile(id: string): Observable<RetrieveProfileDto> {
-		const url = this.urlGenerator.generateUrlForProfile(id);
+		const url = this.searchEngine.generateUrlForProfile(id);
 		return this.http.get(url).pipe(
 			pluck("data"),
-			map(profile => this.urlGenerator.transformData(profile)),
-			catchError(err => throwError(new NotFoundException()))
+			map(profile => this.searchEngine.transformData(profile)),
+			catchError(err =>
+				throwError(this.searchEngine.handleResponseError(err))
+			)
 		);
 	}
 }

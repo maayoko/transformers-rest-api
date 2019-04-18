@@ -10,7 +10,7 @@ import {
 import { AutocompleteService } from "./autocomplete.service";
 import { RequestParamsDto } from "./dto/request.params";
 import { GetProfileDto } from "./dto/get-profile-dto";
-import { AllExceptionFilter } from "../common/filters/rpc-exception.filter";
+import { AllExceptionFilter } from "./filters/rpc-exception.filter";
 
 @UseFilters(AllExceptionFilter)
 @Controller("profile-autocomplete")

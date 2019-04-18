@@ -1,26 +1,31 @@
 import { Injectable } from "@nestjs/common";
 import { IStrategy } from "./interfaces/strategy";
 import { SearchStrategy } from "./Strategy";
-import { IUrlGenerator, UrlGeneratorType } from "./interfaces/url.generator";
-import { FacebookUrlGenerator } from "./urlGenerators/facebook.generator";
+import { SearchEngine, SearchEngineType } from "./interfaces/search-engine";
+import { FacebookSearchEngine } from "./searchEngines/facebook.engine";
+import { ModuleRef } from "@nestjs/core";
 
 @Injectable()
 export class StrategyCollection {
-	private readonly strategies: Map<UrlGeneratorType, IStrategy> = new Map();
+	private readonly strategies: Map<SearchEngineType, IStrategy> = new Map();
 
-	constructor(fbUrlGenerator: FacebookUrlGenerator) {
-		this.createStrategies([...arguments] as IUrlGenerator[]);
+	constructor(
+		fbSearchEngine: FacebookSearchEngine,
+		private moduleRef: ModuleRef
+	) {
+		this.createStrategies([...arguments] as SearchEngine[]);
 	}
 
-	createStrategies(urlGenerators: IUrlGenerator[]): void {
-		for (let urlGenerator of urlGenerators) {
-			const { type } = urlGenerator;
-			this.strategies.set(type, new SearchStrategy(urlGenerator));
+	createStrategies(searchEngines: SearchEngine[]): void {
+		for (let searchEngine of searchEngines) {
+			const { type } = searchEngine;
+			this.strategies.set(type, new SearchStrategy(searchEngine));
 		}
 	}
 
-	getStrategy(type: UrlGeneratorType): IStrategy | undefined {
+	getStrategy(type: SearchEngineType): IStrategy | undefined {
 		const strategy = this.strategies.get(type);
+		console.log(this.moduleRef.get(FacebookSearchEngine));
 		return strategy;
 	}
 }

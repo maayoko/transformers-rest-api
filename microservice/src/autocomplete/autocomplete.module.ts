@@ -2,8 +2,8 @@ import { Module, HttpModule } from "@nestjs/common";
 import { ProfileAutocompleteController } from "./autocomplete.controller";
 import { ProfileAutocompleteService } from "./autocomplete.service";
 import { StrategyCollection } from "./strategies/Collection";
-import { configs } from "../config/index";
-import { urlGenerators } from "./strategies/urlGenerators";
+import { configs } from "./config/index";
+import { searchEngines } from "./strategies/searchEngines";
 
 @Module({
 	imports: [HttpModule],
@@ -12,7 +12,7 @@ import { urlGenerators } from "./strategies/urlGenerators";
 		ProfileAutocompleteService,
 		StrategyCollection,
 		...configs,
-		...urlGenerators
+		...searchEngines
 	]
 })
 export class AutocompleteModule {}
