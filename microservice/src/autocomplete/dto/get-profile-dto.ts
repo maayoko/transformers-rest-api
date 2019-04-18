@@ -1,5 +1,5 @@
 import { IsString, IsNotEmpty, Contains } from "class-validator";
-import { SearchEngineType } from "../strategies/interfaces/search-engine";
+import { SearchEngineType } from "../searchEngines/interfaces/search-engine";
 
 export class GetProfileDto {
 	@IsString()

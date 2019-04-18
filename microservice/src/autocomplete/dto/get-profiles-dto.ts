@@ -1,5 +1,5 @@
 import { IsNotEmpty, IsString, Contains, IsArray } from "class-validator";
-import { SearchEngineType } from "../strategies/interfaces/search-engine";
+import { SearchEngineType } from "../searchEngines/interfaces/search-engine";
 
 export class GetProfilesDto {
 	@Contains("facebook")

@@ -1,18 +1,12 @@
-import { Module, HttpModule } from "@nestjs/common";
+import { Module } from "@nestjs/common";
 import { ProfileAutocompleteController } from "./autocomplete.controller";
 import { ProfileAutocompleteService } from "./autocomplete.service";
-import { StrategyCollection } from "./strategies/Collection";
-import { configs } from "./config/index";
-import { searchEngines } from "./strategies/searchEngines";
+import { SearchEnginesModule } from "./searchEngines/search-engines.module";
+import { searchEngines } from "./searchEngines/engines";
 
 @Module({
-	imports: [HttpModule],
+	imports: [SearchEnginesModule],
 	controllers: [ProfileAutocompleteController],
-	providers: [
-		ProfileAutocompleteService,
-		StrategyCollection,
-		...configs,
-		...searchEngines
-	]
+	providers: [ProfileAutocompleteService, ...searchEngines]
 })
 export class AutocompleteModule {}

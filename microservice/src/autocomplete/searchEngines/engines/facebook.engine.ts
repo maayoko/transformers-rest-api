@@ -1,20 +1,32 @@
-import { SearchEngine } from "../interfaces/search-engine";
+import { ISearchEngine } from "../interfaces/search-engine";
 import { FACEBOOK_CONFIG_TOKEN } from "../../config/facebook.config";
-import { Inject, Injectable, BadRequestException } from "@nestjs/common";
+import {
+	Inject,
+	Injectable,
+	BadRequestException,
+	HttpService
+} from "@nestjs/common";
 import { IFacebookConfig } from "../../config/interfaces/facebook-config.interface";
 import { SearchEngineType } from "../interfaces/search-engine";
 import { RetrieveFacebookProfileDto } from "../../dto/retrieve-facebook-profile-dto";
 import { RetrieveProfileDto } from "../../dto/retrieve-profile-dto";
 import { AxiosError } from "axios";
+import { AbstractSearchEngine } from "./abstract.engine";
+
+export const FACEBOOK_ENGINE_TOKEN = "facebook";
 
 @Injectable()
-export class FacebookSearchEngine implements SearchEngine {
-	public type: SearchEngineType = "facebook";
+export class FacebookSearchEngine extends AbstractSearchEngine
+	implements ISearchEngine {
+	public type: SearchEngineType = FACEBOOK_ENGINE_TOKEN;
 
 	constructor(
 		@Inject(FACEBOOK_CONFIG_TOKEN)
-		private readonly fbConfig: IFacebookConfig
-	) {}
+		private readonly fbConfig: IFacebookConfig,
+		http: HttpService
+	) {
+		super(http);
+	}
 
 	private getToken() {
 		const { client_id, client_secret } = this.fbConfig;
