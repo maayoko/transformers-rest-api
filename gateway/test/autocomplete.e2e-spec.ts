@@ -20,33 +20,18 @@ describe("Profile Autocomplete", () => {
 		await app.init();
 	});
 
-	it(`/POST profile-autocomplete`, () => {
-		return request(app.getHttpServer())
+	it(`/POST profile-autocomplete`, async () => {
+		const res = await request(app.getHttpServer())
 			.post("/profile-autocomplete")
 			.send({ type: "facebook", query: "bornfight", currentValues: [] })
 			.set("Accept", "application/json")
 			.expect(200)
-			.expect("Content-Type", /json/)
-			.then(res => {
-				expect(Array.isArray(res.body)).toBeTruthy();
-			});
+			.expect("Content-Type", /json/);
+
+		expect(Array.isArray(res.body)).toBeTruthy();
 	});
 
-	it(`/GET profile-autocomplete`, () => {
-		return request(app.getHttpServer())
-			.get("/profile-autocomplete")
-			.query({ type: "facebook", id: "2186857948260301" })
-			.set("Accept", "application/json")
-			.expect(200)
-			.expect("Content-Type", /json/)
-			.then(res => {
-				expect(Object.prototype.toString.call(res.body)).toBe(
-					"[object Object]",
-				);
-			});
-	});
-
-	it(`POST profile-autocompleete - invalid type paramater`, () => {
+	it(`/POST profile-autocompleete - invalid type paramater`, () => {
 		return request(app.getHttpServer())
 			.post("/profile-autocomplete")
 			.send({ type: "facebo", query: "born", currentValues: [] })
@@ -56,7 +41,7 @@ describe("Profile Autocomplete", () => {
 			.expect("Content-Type", /json/);
 	});
 
-	it(`POST profile-autocompleete - invalid query paramater`, () => {
+	it(`/POST profile-autocompleete - invalid query paramater`, () => {
 		return request(app.getHttpServer())
 			.post("/profile-autocomplete")
 			.send({ type: "facebook", query: "", currentValues: [] })
@@ -66,14 +51,49 @@ describe("Profile Autocomplete", () => {
 			.expect("Content-Type", /json/);
 	});
 
-	it(`POST profile-autocompleete - invalid currentValues paramater`, () => {
+	it(`/POST profile-autocompleete - invalid currentValues paramater`, () => {
 		return request(app.getHttpServer())
 			.post("/profile-autocomplete")
-			.send({ type: "facebook", query: "", currentValues: "" })
+			.send({ type: "facebook", query: "bornfight", currentValues: "" })
 			.set("Content-Type", "application/json")
 			.set("Accept", "application/json")
 			.expect(400)
 			.expect("Content-Type", /json/);
+	});
+
+	it(`/GET profile-autocomplete`, async () => {
+		const res = await request(app.getHttpServer())
+			.get("/profile-autocomplete")
+			.query({ type: "facebook", id: "2186857948260301" })
+			.set("Accept", "application/json")
+			.expect(200)
+			.expect("Content-Type", /json/);
+
+		expect(Object.prototype.toString.call(res.body)).toBe(
+			"[object Object]",
+		);
+	});
+
+	it(`/GET profile-autocomplete - invalid type parameter`, async () => {
+		const res = await request(app.getHttpServer())
+			.get("/profile-autocomplete")
+			.query({ type: "facebo", id: "2186857948260301" })
+			.set("Accept", "application/json")
+			.expect(400)
+			.expect("Content-Type", /json/);
+
+		expect(res.body.error).toBe("Bad Request");
+	});
+
+	it(`/GET profile-autocomplete - nonexisting id parameter`, async () => {
+		const res = await request(app.getHttpServer())
+			.get("/profile-autocomplete")
+			.query({ type: "facebook", id: "24836434872364" })
+			.set("Accept", "application/json")
+			.expect(400)
+			.expect("Content-Type", /json/);
+
+		expect(res.body.error).toBe("Bad Request");
 	});
 
 	afterAll(async () => {
