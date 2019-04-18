@@ -13,7 +13,7 @@ async function bootstrap() {
 			host: "microservice"
 		}
 	});
-	app.useGlobalPipes(new ValidationPipe());
+	// app.useGlobalPipes(new ValidationPipe());
 	await app.listenAsync();
 }
 bootstrap();

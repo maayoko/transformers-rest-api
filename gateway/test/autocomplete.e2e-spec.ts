@@ -1,15 +1,10 @@
 import * as request from "supertest";
 import { Test } from "@nestjs/testing";
 import { AutocompleteModule } from "../src/autocomplete/autocomplete.module";
-import { AutocompleteService } from "../src/autocomplete/autocomplete.service";
 import { INestApplication } from "@nestjs/common";
 
 describe("Profile Autocomplete", () => {
 	let app: INestApplication;
-	let profileAutocompleteService = {
-		getProfiles: () => ["test"],
-		getProfile: () => "test",
-	};
 
 	beforeAll(async () => {
 		const module = await Test.createTestingModule({
@@ -29,6 +24,25 @@ describe("Profile Autocomplete", () => {
 			.expect("Content-Type", /json/);
 
 		expect(Array.isArray(res.body)).toBeTruthy();
+	});
+
+	it(`/POST profile-autocomplete - exclude selected profiles`, async () => {
+		const selectedProfileId = 2186857948260301;
+		const res = await request(app.getHttpServer())
+			.post("/profile-autocomplete")
+			.send({
+				type: "facebook",
+				query: "bornfi",
+				currentValues: [selectedProfileId],
+			})
+			.set("Accept", "application/json")
+			.expect(200)
+			.expect("Content-Type", /json/);
+
+		expect(Array.isArray(res.body)).toBeTruthy();
+		expect(
+			!!res.body.find(profile => profile.id === selectedProfileId),
+		).toBeFalsy();
 	});
 
 	it(`/POST profile-autocompleete - invalid type paramater`, () => {

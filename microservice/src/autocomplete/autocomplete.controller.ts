@@ -1,4 +1,10 @@
-import { Controller, UseFilters, UseInterceptors } from "@nestjs/common";
+import {
+	Controller,
+	UseFilters,
+	UseInterceptors,
+	UsePipes,
+	ValidationPipe
+} from "@nestjs/common";
 import { ProfileAutocompleteService } from "./autocomplete.service";
 import { GetProfilesDto } from "./dto/get-profiles-dto";
 import { Observable } from "rxjs";
@@ -9,6 +15,7 @@ import { UnknownExceptionFilter } from "./filters/unknown-exception.filter";
 import { RetrieveProfileDto } from "./dto/retrieve-profile-dto";
 import { ProfilesFilterInterceptor } from "./interceptors/profiles-filter.interceptor";
 
+@UsePipes(ValidationPipe)
 @UseFilters(UnknownExceptionFilter, KnownExceptionFilter)
 @Controller()
 export class ProfileAutocompleteController {
