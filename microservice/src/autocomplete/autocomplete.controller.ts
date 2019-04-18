@@ -1,7 +1,6 @@
 import { Controller, UseFilters } from "@nestjs/common";
 import { ProfileAutocompleteService } from "./autocomplete.service";
 import { GetProfilesDto } from "./dto/get-profiles-dto";
-import { AxiosResponse } from "axios";
 import { Observable } from "rxjs";
 import { GetProfileDto } from "./dto/get-profile-dto";
 import { MessagePattern } from "@nestjs/microservices";

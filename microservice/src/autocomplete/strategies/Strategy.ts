@@ -1,5 +1,5 @@
-import { HttpService } from "@nestjs/common";
-import { Observable } from "rxjs";
+import { HttpService, NotFoundException } from "@nestjs/common";
+import { Observable, throwError } from "rxjs";
 import { IStrategy } from "./interfaces/strategy";
 import { IUrlGenerator } from "./interfaces/url.generator";
 import { map, catchError, pluck } from "rxjs/operators";
@@ -21,6 +21,12 @@ export class SearchStrategy implements IStrategy {
 
 	public searchProfile(id: string): Observable<RetrieveProfileDto> {
 		const url = this.urlGenerator.generateUrlForProfile(id);
-		return this.http.get(url).pipe(map(response => response.data));
+		return this.http.get(url).pipe(
+			pluck("data"),
+			map(profile => this.urlGenerator.transformData(profile)),
+			catchError(err => {
+				return throwError(new NotFoundException());
+			})
+		);
 	}
 }

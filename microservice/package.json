@@ -1,31 +1,40 @@
 {
-  "name": "microservice",
-  "version": "1.0.0",
-  "description": "Nest TypeScript starter repository",
-  "license": "MIT",
-  "scripts": {
-    "build": "tsc -p tsconfig.build.json",
-    "start": "nodemon",
-    "prestart:prod": "npm run build",
-    "start:prod": "node dist/main.js"
-  },
-  "dependencies": {
-    "@nestjs/common": "6.1.0",
-    "@nestjs/core": "6.1.0",
-    "@nestjs/microservices": "6.1.0",
-    "@nestjs/platform-express": "6.1.0",
-    "@nestjs/testing": "6.1.0",
-    "class-transformer": "0.2.0",
-    "class-validator": "0.9.1",
-    "reflect-metadata": "0.1.13",
-    "rxjs": "6.4.0",
-    "typescript": "3.4.3"
-  },
-  "devDependencies": {
-    "@types/amqplib": "0.5.11",
-    "@types/node": "10.14.4",
-    "nodemon": "^1.18.11",
-    "ts-node": "8.0.3",
-    "tslint": "5.15.0"
-  }
+	"name": "microservice",
+	"version": "1.0.0",
+	"description": "Nest TypeScript starter repository",
+	"license": "MIT",
+	"scripts": {
+		"build": "tsc -p tsconfig.build.json",
+		"start": "nodemon",
+		"prestart:prod": "npm run build",
+		"start:prod": "node dist/main.js",
+		"test": "jest",
+		"test:watch": "jest --watch",
+		"test:cov": "jest --coverage",
+		"test:e2e": "jest --config ./test/e2e/jest-e2e.json"
+	},
+	"dependencies": {
+		"@nestjs/common": "6.1.0",
+		"@nestjs/core": "6.1.0",
+		"@nestjs/microservices": "6.1.0",
+		"@nestjs/platform-express": "6.1.0",
+		"@nestjs/testing": "^6.1.1",
+		"class-transformer": "0.2.0",
+		"class-validator": "0.9.1",
+		"reflect-metadata": "0.1.13",
+		"rxjs": "6.4.0",
+		"typescript": "3.4.3"
+	},
+	"devDependencies": {
+		"@types/amqplib": "0.5.11",
+		"@types/jest": "^24.0.11",
+		"@types/node": "10.14.4",
+		"@types/supertest": "^2.0.7",
+		"jest": "^24.7.1",
+		"nodemon": "^1.18.11",
+		"supertest": "^4.0.2",
+		"ts-jest": "^24.0.2",
+		"ts-node": "8.0.3",
+		"tslint": "5.15.0"
+	}
 }

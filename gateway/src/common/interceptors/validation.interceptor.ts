@@ -12,16 +12,17 @@ import { catchError } from "rxjs/operators";
 export class ValidationInterceptor implements NestInterceptor {
 	intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
 		return next.handle().pipe(
-			catchError(err =>
-				throwError(
+			catchError(err => {
+				console.log(err);
+				return throwError(
 					new BadRequestException(
 						err.message.map(({ property, constraints }) => ({
 							[property]: Object.values(constraints),
 						})),
 						err.error,
 					),
-				),
-			),
+				);
+			}),
 		);
 	}
 }

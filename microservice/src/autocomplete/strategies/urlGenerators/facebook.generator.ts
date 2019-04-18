@@ -1,7 +1,7 @@
 import { IUrlGenerator } from "../interfaces/url.generator";
 import { FACEBOOK_CONFIG_TOKEN } from "../../../config/facebook.config";
 import { Inject, Injectable } from "@nestjs/common";
-import { IFacebookConfig } from "src/config/facebook-config.interface";
+import { IFacebookConfig } from "../../../config/interfaces/facebook-config.interface";
 import { UrlGeneratorType } from "../interfaces/url.generator";
 import { RetrieveFacebookProfileDto } from "../../dto/retrieve-facebook-profile-dto";
 import { RetrieveProfileDto } from "../../dto/retrieve-profile-dto";

@@ -1,4 +1,4 @@
-import { IFacebookConfig } from "./facebook-config.interface";
+import { IFacebookConfig } from "./interfaces/facebook-config.interface";
 
 export const DEFAULT_FACEBOOK_CONFIG: IFacebookConfig = {
 	client_id: "219362465221949",
