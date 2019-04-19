@@ -2,7 +2,7 @@ import { Injectable, Inject } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { Observable } from "rxjs";
 import { AUTOCOMPLETE_SERVICE } from "./autocomplete.constants";
-import { RequestParamsDto } from "./dto/request.params";
+import { RequestParamsDto } from "./dto/get-profiles-dto";
 import { GetProfileDto } from "./dto/get-profile-dto";
 
 @Injectable()

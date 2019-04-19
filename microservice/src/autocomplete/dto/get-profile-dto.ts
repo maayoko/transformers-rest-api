@@ -1,14 +1,8 @@
-import { IsString, IsNotEmpty, Contains } from "class-validator";
-import { SearchEngineType } from "../searchEngines/interfaces/search-engine";
-import { FACEBOOK_ENGINE_TOKEN } from "../searchEngines/engines/facebook.engine";
+import { IsString, IsNotEmpty } from "class-validator";
+import { BaseGetProfileDto } from "./base-get-profile-dto";
 
-export class GetProfileDto {
+export class GetProfileDto extends BaseGetProfileDto {
 	@IsString()
 	@IsNotEmpty()
 	id: string;
-
-	@Contains(FACEBOOK_ENGINE_TOKEN)
-	@IsString()
-	@IsNotEmpty()
-	type: SearchEngineType;
 }

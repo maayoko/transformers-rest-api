@@ -8,7 +8,7 @@ import {
 	UseFilters,
 } from "@nestjs/common";
 import { AutocompleteService } from "./autocomplete.service";
-import { RequestParamsDto } from "./dto/request.params";
+import { RequestParamsDto } from "./dto/get-profiles-dto";
 import { GetProfileDto } from "./dto/get-profile-dto";
 import { AllExceptionFilter } from "./filters/rpc-exception.filter";
 
