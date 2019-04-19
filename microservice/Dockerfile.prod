@@ -1,0 +1,15 @@
+FROM node:11.9
+LABEL maintainer="maayoko@gmail.com"
+
+USER root
+RUN apt-get update && \
+    mkdir /home/node/microservice
+ADD . /home/node/microservice
+RUN chown -R node: /home/node/microservice
+
+USER node
+WORKDIR /home/node/microservice
+RUN yarn install && yarn build
+EXPOSE 3009
+
+CMD ["sh", "-c", "yarn start:prod"]

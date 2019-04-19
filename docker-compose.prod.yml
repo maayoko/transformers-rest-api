@@ -1,0 +1,37 @@
+version: "3.7"
+services:
+  gateway:
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile.prod
+    networks:
+      new:
+        aliases:
+          - ${GATEWAY_HOSTNAME}
+    environment:
+      - GATEWAY_PORT=${GATEWAY_PORT}
+    ports:
+      - ${GATEWAY_PORT}:${GATEWAY_PORT}
+    depends_on:
+      - ${MICROSERVICE_HOSTNAME}
+    restart: always
+
+  microservice:
+    build:
+      context: ./microservice
+      dockerfile: Dockerfile.prod
+    environment:
+      - MICROSERVICE_HOSTNAME=${MICROSERVICE_HOSTNAME}
+      - MICROSERVICE_PORT=${MICROSERVICE_PORT}
+    env_file:
+      - microservice-variables.env
+    ports:
+      - ${MICROSERVICE_PORT}:${MICROSERVICE_PORT}
+    networks:
+      new:
+        aliases:
+          - ${MICROSERVICE_HOSTNAME}
+    restart: always
+
+networks:
+  new:
