@@ -67,9 +67,9 @@ export class FacebookSearchEngine extends AbstractSearchEngine
 	}
 
 	handleResponseError(err: AxiosError) {
-		return new BadRequestException(
-			"Couldn't process your request. Please try again later.",
-			"Bad Request"
-		);
+		const message =
+			(err.response.data.error && err.response.data.error.message) ||
+			"Couldn't process your request. Please try again later.";
+		return new BadRequestException(message, "Bad Request");
 	}
 }
