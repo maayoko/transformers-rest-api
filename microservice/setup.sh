@@ -11,6 +11,8 @@ if [ ! -d "$NODE_DIRECTORY" ]; then
     yarn install
 
     echo "Installation finished."
+else
+    echo "Already installed. Continue..."
 fi
 
 echo "Starting the microservice in development mode..."

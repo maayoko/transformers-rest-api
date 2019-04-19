@@ -1,8 +1,8 @@
 import { IFacebookConfig } from "./interfaces/facebook-config.interface";
 
 export const DEFAULT_FACEBOOK_CONFIG: IFacebookConfig = {
-	client_id: "219362465221949",
-	client_secret: "84cbf2cff42c48c8b4aaa723ed36acb2",
+	client_id: process.env.FACEBOOK_CLIENT_ID || "",
+	client_secret: process.env.FACEBOOK_CLIENT_SECRET || "",
 	base_url: "https://graph.facebook.com/v3.2",
 	fields: ["name", "picture", "engagement"]
 };
