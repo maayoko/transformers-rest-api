@@ -9,13 +9,11 @@ services:
     networks:
       new:
         aliases:
-          - api_gateway
-    environment:
-      - MICROSERVICE_URL=http://microservice
+          - ${GATEWAY_HOSTNAME}
     ports:
-      - 3000:3000
+      - ${GATEWAY_PORT}:${GATEWAY_PORT}
     depends_on:
-      - microservice
+      - ${MICROSERVICE_HOSTNAME}
 
   microservice:
     build:
@@ -23,12 +21,17 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./microservice:/home/node/microservice
+    environment:
+      - MICROSERVICE_HOSTNAME=${MICROSERVICE_HOSTNAME}
+      - MICROSERVICE_PORT=${MICROSERVICE_PORT}
+    env_file:
+      - microservice-variables.env
     ports:
-      - 3009:3009
+      - ${MICROSERVICE_PORT}:${MICROSERVICE_PORT}
     networks:
       new:
         aliases:
-          - microservice
+          - ${MICROSERVICE_HOSTNAME}
 
 networks:
   new:
